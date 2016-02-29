@@ -6,9 +6,13 @@
   "dependencies": {
     "jquery": "^2.2.1",
     "lodash": "^4.5.1",
-    "react-youtube": "^5.1.0"
+    "react-youtube": "^5.1.0",
+    "store": "^1.3.20",
+    "wurl": "^2.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-preset-stage-0": "^6.5.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
