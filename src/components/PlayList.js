@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from "react"
 import ReactDOM from "react-dom"
 import _ from "lodash"
+import $ from "jquery"
 
 export default class PlayList extends Component {
 	clickPlayList = (index) => {
