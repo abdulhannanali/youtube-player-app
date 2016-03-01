@@ -53139,6 +53139,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -53172,10 +53174,20 @@ var YoutubePlayer = function (_Component) {
 		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(YoutubePlayer).call(this));
 
 		_this.state = {
-			autoplay: _store2.default.get("autoplay") || 0
+			autoplay: _store2.default.get("autoplay") || 0,
+			play: false
+		};
+
+		_this.onPlay = function () {
+			_this.setState({
+				play: 1
+			});
 		};
 
 		_this.onVideoEnd = function (event) {
+			_this.setState({
+				play: 0
+			});
 			_this.props.playNext();
 		};
 
@@ -53220,12 +53232,30 @@ var YoutubePlayer = function (_Component) {
 				),
 				_react2.default.createElement(_reactYoutube2.default, { videoId: currentId,
 					onEnd: _this.onVideoEnd,
+					onPlay: _this.onPlay,
 					opts: options })
 			);
 		};
 
 		return _this;
 	}
+
+	_createClass(YoutubePlayer, [{
+		key: "shouldComponentUpdate",
+		value: function shouldComponentUpdate(nextProps, nextState) {
+
+			// if the video is play and autoplay  is changed then the component
+			// doesn't need to be rendered
+			if (this.state.play && nextState.autoplay != this.state.autoplay) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		// if the video is played
+
+	}]);
 
 	return YoutubePlayer;
 }(_react.Component);

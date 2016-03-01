@@ -8,11 +8,35 @@ export default class YoutubePlayer extends Component {
 		super()	
 	}	
 
+	shouldComponentUpdate (nextProps, nextState) {
+
+		// if the video is play and autoplay  is changed then the component
+		// doesn't need to be rendered
+		if (this.state.play && 
+			nextState.autoplay != this.state.autoplay) {
+			return false
+		}
+		else {
+			return true
+		}
+	}
+
 	state = {
-		autoplay: store.get("autoplay") || 0
+		autoplay: store.get("autoplay") || 0,
+		play: false
+	}
+
+	// if the video is played
+	onPlay = () => {
+		this.setState({
+			play: 1
+		})	
 	}
 
 	onVideoEnd = (event) => {
+		this.setState({
+			play: 0
+		})
 		this.props.playNext()
 	}
 
@@ -24,6 +48,7 @@ export default class YoutubePlayer extends Component {
 
 		store.set("autoplay", autoplay)
 	}
+
 
 	render = () => {
 		if (!this.props.playlist || _.isEmpty(this.props.playlist)) {
@@ -45,6 +70,7 @@ export default class YoutubePlayer extends Component {
 				</div>
 				<Youtube videoId={currentId}
 						 onEnd={this.onVideoEnd}
+						 onPlay={this.onPlay}
 						 opts={options} />
 			</div>
 		)

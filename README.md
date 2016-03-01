@@ -14,5 +14,5 @@ Youtube Player built in React.JS.
 This projects really need them
 
 ### LICENSE
-This code is licensed under ISC License. See [LICENSE](LICENSE) for more details
+This code is licensed under ISC License. See [LICENSE](LICENSE) for more details	
 
