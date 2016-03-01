@@ -42837,18 +42837,68 @@ var _YoutubeApp2 = _interopRequireDefault(_YoutubeApp);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(_YoutubeApp2.default, null), document.getElementById("container")); // React and ReactDOM are external dependencies mentioned in
+(0, _reactDom.render)(_react2.default.createElement(_YoutubeApp2.default, null), document.getElementById("container")); // React and ReactDOM are external dependencies mentioned in
 // the index.html file
 //
 
-},{"./components/YoutubeApp.js":253,"react":241,"react-dom":111}],251:[function(require,module,exports){
+},{"./components/YoutubeApp.js":254,"react":241,"react-dom":111}],251:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ErrorBox = function (_Component) {
+	_inherits(ErrorBox, _Component);
+
+	function ErrorBox() {
+		var _Object$getPrototypeO;
+
+		var _temp, _this, _ret;
+
+		_classCallCheck(this, ErrorBox);
+
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
+		}
+
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ErrorBox)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.render = function () {
+			if (_this.props.errorMessage) {
+				return _react2.default.createElement(
+					"p",
+					{ className: "bg-danger" },
+					_this.props.errorMessage,
+					"❌❌❌❌❌❌"
+				);
+			} else {
+				return false;
+			}
+		}, _temp), _possibleConstructorReturn(_this, _ret);
+	}
+
+	return ErrorBox;
+}(_react.Component);
+
+exports.default = ErrorBox;
+
+},{"react":241}],252:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
 
 var _react = require("react");
 
@@ -42874,15 +42924,27 @@ var PlayList = function (_Component) {
 	_inherits(PlayList, _Component);
 
 	function PlayList() {
+		var _Object$getPrototypeO;
+
+		var _temp, _this, _ret;
+
 		_classCallCheck(this, PlayList);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayList).apply(this, arguments));
-	}
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
+		}
 
-	_createClass(PlayList, [{
-		key: "render",
-		value: function render() {
-			if (_lodash2.default.isEmpty(this.props.playlist)) {
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(PlayList)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.clickPlayList = function (index) {
+			return function () {
+				_this.props.playVideo(index);
+			};
+		}, _this.removeVideo = function (index) {
+			return function (event) {
+				event.preventDefault();
+				_this.props.removeVideo(index);
+			};
+		}, _this.render = function () {
+			if (_lodash2.default.isEmpty(_this.props.playlist)) {
 				return _react2.default.createElement(
 					"h1",
 					null,
@@ -42890,37 +42952,66 @@ var PlayList = function (_Component) {
 				);
 			}
 
-			var videos = this.props.playlist.map(function (value, index, array) {
-				var videoStyle = {
-					color: index == this.props.current ? "green" : "black"
-				};
+			var videos = _this.props.playlist.map(function (value, index, array) {
+				var classNames = [];
+				classNames.push(index == this.props.current ? "success" : "");
 				return _react2.default.createElement(
-					"div",
-					{ className: "video", style: videoStyle },
-					"id: ",
-					value
+					"tr",
+					{ className: classNames.join(" "),
+						key: value },
+					_react2.default.createElement(
+						"td",
+						{ onClick: this.clickPlayList(index) },
+						value
+					),
+					_react2.default.createElement(
+						"td",
+						null,
+						_react2.default.createElement(
+							"a",
+							{ onClick: this.removeVideo(index), href: "#" },
+							"Delete"
+						)
+					)
 				);
-			}.bind(this));
+			}.bind(_this));
 
 			return _react2.default.createElement(
-				"div",
-				{ className: "allTheVideosList" },
+				"table",
+				{ className: "table table-hover" },
 				_react2.default.createElement(
-					"h3",
+					"thead",
 					null,
-					"Playlist Videos"
+					_react2.default.createElement(
+						"tr",
+						null,
+						_react2.default.createElement(
+							"th",
+							null,
+							"Youtube Video Id (also known as id)"
+						),
+						_react2.default.createElement(
+							"th",
+							null,
+							"Delete this video"
+						)
+					)
 				),
-				videos
+				_react2.default.createElement(
+					"tbody",
+					null,
+					videos
+				)
 			);
-		}
-	}]);
+		}, _temp), _possibleConstructorReturn(_this, _ret);
+	}
 
 	return PlayList;
 }(_react.Component);
 
 exports.default = PlayList;
 
-},{"lodash":107,"react":241,"react-dom":111}],252:[function(require,module,exports){
+},{"lodash":107,"react":241,"react-dom":111}],253:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42966,12 +43057,41 @@ var VideoForm = function (_Component) {
 		}, _this.handleLinkSubmit = function (event) {
 			event.preventDefault();
 			_this.props.onFormSubmit(_this.state.link);
+			_this.setState({
+				link: ""
+			});
+		}, _this.deleteVideos = function (event) {
+			_this.props.deleteVideos();
 		}, _this.render = function () {
 			return _react2.default.createElement(
 				"form",
 				{ onSubmit: _this.handleLinkSubmit },
-				_react2.default.createElement("input", { type: "text", value: _this.state.link, onChange: _this.handleLinkChange }),
-				_react2.default.createElement("input", { type: "submit", value: "Add this video" })
+				_react2.default.createElement(
+					"div",
+					{ className: "form-group" },
+					_react2.default.createElement(
+						"label",
+						{ className: "sr-only", htmlFor: "youtubeLink" },
+						"Youtube Link"
+					),
+					_react2.default.createElement("input", { type: "text",
+						className: "form-control",
+						value: _this.state.link,
+						onChange: _this.handleLinkChange,
+						id: "youtubeLink" })
+				),
+				_react2.default.createElement(
+					"button",
+					{ type: "submit",
+						className: "btn btn-default" },
+					"Add this Video"
+				),
+				_react2.default.createElement(
+					"button",
+					{ className: "btn btn-default",
+						onClick: _this.deleteVideos },
+					"Delete all Videos"
+				)
 			);
 		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
@@ -42981,7 +43101,7 @@ var VideoForm = function (_Component) {
 
 exports.default = VideoForm;
 
-},{"react":241,"react-dom":111}],253:[function(require,module,exports){
+},{"react":241,"react-dom":111}],254:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -43007,6 +43127,10 @@ var _YoutubePlayer2 = _interopRequireDefault(_YoutubePlayer);
 var _PlayList = require("./PlayList.js");
 
 var _PlayList2 = _interopRequireDefault(_PlayList);
+
+var _ErrorBox = require("./ErrorBox.js");
+
+var _ErrorBox2 = _interopRequireDefault(_ErrorBox);
 
 var _wurl = require("wurl");
 
@@ -43034,7 +43158,8 @@ var YoutubeApp = function (_Component) {
 
 		_this.state = {
 			playlist: _store2.default.get("playlistVideos") || [],
-			current: _store2.default.get("current") || 0
+			current: _store2.default.get("current") || 0,
+			errorMessage: ""
 		};
 
 		_this.changeCurrentLink = function (link) {
@@ -43043,6 +43168,21 @@ var YoutubeApp = function (_Component) {
 				var playlist = _this.state.playlist;
 				var id = _this.getYoutubeId(link);
 				if (id) {
+					if (playlist.find(function (value) {
+						return value == id;
+					})) {
+						_this.setState({
+							errorMessage: "This video is already present in the playlist :) "
+						});
+
+						setTimeout(function () {
+							_this.setState({
+								errorMessage: ""
+							});
+						}, 2000);
+						return;
+					}
+
 					playlist.push(id);
 
 					_store2.default.set("playlistVideos", playlist);
@@ -43085,17 +43225,62 @@ var YoutubeApp = function (_Component) {
 			_store2.default.set("current", current);
 		};
 
+		_this.playVideo = function (index) {
+			_this.setState({
+				current: index
+			});
+			_store2.default.set("current", index);
+		};
+
+		_this.removeVideo = function (index) {
+			var playlist = _this.state.playlist;
+			playlist.splice(index, 1);
+
+			_this.setState({
+				playlist: playlist
+			});
+		};
+
+		_this.deleteVideos = function () {
+			var playlist = [];
+			_this.setState({
+				playlist: playlist
+			});
+			_store2.default.set("playlistVideos", playlist);
+			_store2.default.set("current", 0);
+		};
+
 		_this.render = function () {
 
 			return _react2.default.createElement(
 				"div",
 				{ className: "YoutubeApp" },
-				_react2.default.createElement(_VideoForm2.default, { onFormSubmit: _this.changeCurrentLink }),
-				_react2.default.createElement(_YoutubePlayer2.default, { playlist: _this.state.playlist,
-					current: _this.state.current,
-					playNext: _this.playNextVideo }),
+				_react2.default.createElement(
+					"div",
+					{ className: "row" },
+					_react2.default.createElement(_VideoForm2.default, { onFormSubmit: _this.changeCurrentLink,
+						deleteVideos: _this.deleteVideos })
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row" },
+					_react2.default.createElement(_ErrorBox2.default, { errorMessage: _this.state.errorMessage })
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "row" },
+					_react2.default.createElement(
+						"div",
+						{ className: "col-sm-offset-3 col-sm-6" },
+						_react2.default.createElement(_YoutubePlayer2.default, { playlist: _this.state.playlist,
+							current: _this.state.current,
+							playNext: _this.playNextVideo })
+					)
+				),
 				_react2.default.createElement(_PlayList2.default, { playlist: _this.state.playlist,
-					current: _this.state.current })
+					current: _this.state.current,
+					playVideo: _this.playVideo,
+					removeVideo: _this.removeVideo })
 			);
 		};
 
@@ -43110,7 +43295,7 @@ var YoutubeApp = function (_Component) {
 
 exports.default = YoutubeApp;
 
-},{"./PlayList.js":251,"./VideoForm.js":252,"./YoutubePlayer.js":254,"react":241,"react-dom":111,"store":243,"wurl":244}],254:[function(require,module,exports){
+},{"./ErrorBox.js":251,"./PlayList.js":252,"./VideoForm.js":253,"./YoutubePlayer.js":255,"react":241,"react-dom":111,"store":243,"wurl":244}],255:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -43195,11 +43380,6 @@ var YoutubePlayer = function (_Component) {
 							_this.state.autoplay ? "OFF" : "ON"
 						)
 					)
-				),
-				_react2.default.createElement(
-					"p",
-					null,
-					"Dirty PlayList"
 				),
 				_react2.default.createElement(_reactYoutube2.default, { videoId: currentId,
 					onEnd: _this.onVideoEnd,
