@@ -1,4 +1,6 @@
 # Youtube Player
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/abdulhannanali/youtube-player-app.svg)](https://greenkeeper.io/)
 Youtube Player built in React.JS.
 
 **DEMO:** [Link](https://abdulhannanali.github.io/youtube-player-app/)
